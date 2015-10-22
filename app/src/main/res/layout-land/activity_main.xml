@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".MainActivity"
-    android:background="@drawable/dosh_vert"
+    android:background="@drawable/dosh_hori"
     android:alpha="0.90">
 
     <TextView
@@ -15,13 +15,12 @@
         android:text="Bill Amount"
         android:id="@+id/lblBillAmount"
         android:textColor="#ffffff"
+        android:alpha="30"
+        android:layout_marginLeft="240dp"
+        android:background="#000000"
         android:layout_alignParentTop="true"
         android:layout_alignParentStart="true"
-        android:layout_marginTop="260dp"
-        android:alpha="30"
-        android:layout_marginBottom="20dp"
-        android:layout_marginLeft="10dp"
-        android:background="#000000" />
+        android:layout_marginTop="30dp" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -33,9 +32,10 @@
         android:textColor="#ffffff"
         android:layout_below="@+id/lblBillAmount"
         android:layout_alignParentLeft="true"
-        android:layout_marginLeft="10dp"
+        android:layout_marginLeft="240dp"
         android:layout_marginBottom="20dp"
-        android:background="#000000" />
+        android:background="#000000"
+        android:layout_marginTop="20dp" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -47,7 +47,7 @@
         android:textColor="#ffffff"
         android:layout_below="@+id/lblTipPercent"
         android:layout_alignParentLeft="true"
-        android:layout_marginLeft="10dp"
+        android:layout_marginLeft="240dp"
         android:layout_marginBottom="20dp"
         android:background="#000000" />
 
@@ -61,7 +61,7 @@
         android:textColor="#ffffff"
         android:layout_below="@+id/lblTip"
         android:layout_alignParentLeft="true"
-        android:layout_marginLeft="10dp"
+        android:layout_marginLeft="240dp"
         android:layout_marginBottom="20dp"
         android:background="#000000" />
 

@@ -1,5 +1,7 @@
 package com.beech.tipcalculator;
 
+import android.content.SharedPreferences;
+import android.content.SharedPreferences.Editor;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.KeyEvent;
@@ -10,6 +12,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.TextView.OnEditorActionListener;
 
+
 import java.text.NumberFormat;
 import java.text.ParseException;
 
@@ -19,6 +22,9 @@ import java.text.ParseException;
 
 public class MainActivity extends AppCompatActivity
         implements OnEditorActionListener, View.OnClickListener {
+
+    private static final float defaultTipPercent = .2f;
+    private static final float adjustTip = .01f;
 
     //Instance Variables (Declaration) for controls and fields
     private EditText txtBillAmount;
@@ -35,8 +41,13 @@ public class MainActivity extends AppCompatActivity
     private float tipPercent;
 
     //Instance variables (Declaration) for formatting
-    NumberFormat currency;
-    NumberFormat percent;
+    private NumberFormat currency;
+    private NumberFormat percent;
+
+    private String strBillAmount;
+
+    //define shared preference object
+    private SharedPreferences savedValues;
 
     //First function call when an app is opened
     @Override
@@ -65,8 +76,44 @@ public class MainActivity extends AppCompatActivity
         currency = NumberFormat.getCurrencyInstance();
         percent = NumberFormat.getPercentInstance();
 
+        // get shared Preferences object
+        savedValues = getSharedPreferences("savedValues", MODE_PRIVATE);
+
         //initialize values and clear all fields
         setDefaults();
+    }
+
+    //(Alt+Fn+Insert) opens a create method option
+    @Override
+    protected void onPause() {
+
+        //save instance variables
+        //access file editor
+        Editor editor = savedValues.edit();
+
+        //write to file
+        editor.putString("billAmountString", strBillAmount);
+        editor.putFloat("tipPercent",tipPercent);
+
+        //commit changes
+        editor.commit();
+
+        super.onPause();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        //retrieve instance variables //TODO test toString() here
+        strBillAmount = savedValues.getString("billAmountString","");
+        tipPercent = savedValues.getFloat("tipPercent", defaultTipPercent);
+
+        //apply bill amount to field
+        txtBillAmount.setText(strBillAmount);
+
+        //update
+        calculateAndDisplay();
     }
 
     @Override
@@ -86,12 +133,12 @@ public class MainActivity extends AppCompatActivity
         {
             case R.id.btnDecrease:
             {
-                tipPercent -= .01f;
+                tipPercent -= adjustTip;
                 break;
             }
             case R.id.btnIncrease:
             {
-                tipPercent += .01f;
+                tipPercent += adjustTip;
                 break;
             }
             case R.id.btnClear:
@@ -108,13 +155,21 @@ public class MainActivity extends AppCompatActivity
         float total;
 
         //get bill amount
-        String strBillAmount = txtBillAmount.getText().toString();
+        strBillAmount = txtBillAmount.getText().toString();
 
-        if(strBillAmount == ""){
+        if( strBillAmount.equals("")){
             billAmount = 0f;
         } else {
                 billAmount = Float.parseFloat(strBillAmount);
         }
+
+        /*try {
+            billAmount = Float.parseFloat(strBillAmount);
+        }
+        catch(Exception e)
+        {
+            billAmount = 0f;
+        }*/
 
         //calculate total
         tipAmount = billAmount * tipPercent;
@@ -132,8 +187,19 @@ public class MainActivity extends AppCompatActivity
     }
 
     public void setDefaults(){
-        tipPercent = .2f;
-        txtBillAmount.setText("0.00");
+        tipPercent = defaultTipPercent;
+        txtBillAmount.setText("");
         updateUI(0f, 0f);
+
+        /*//save instance variables //TODO this seems wrong
+        //access file editor
+        Editor editor = savedValues.edit();
+
+        //write to file
+        editor.putString("billAmountString", "");
+        editor.putFloat("tipPercent", 0f);
+
+        //commit changes
+        editor.commit();*/
     }
 }
