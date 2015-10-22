@@ -1,25 +1,153 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.design.widget.CoordinatorLayout
+<RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
-    android:layout_height="match_parent" android:fitsSystemWindows="true"
-    tools:context=".MainActivity">
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity"
+    android:background="@drawable/dosh_vert"
+    android:alpha="0.90">
 
-    <android.support.design.widget.AppBarLayout android:layout_height="wrap_content"
-        android:layout_width="match_parent" android:theme="@style/AppTheme.AppBarOverlay">
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="Bill Amount"
+        android:id="@+id/lblBillAmount"
+        android:textColor="#ffffff"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="260dp"
+        android:alpha="30"
+        android:layout_marginBottom="20dp"
+        android:layout_marginLeft="10dp"
+        android:background="#000000" />
 
-        <android.support.v7.widget.Toolbar android:id="@+id/toolbar"
-            android:layout_width="match_parent" android:layout_height="?attr/actionBarSize"
-            android:background="?attr/colorPrimary" app:popupTheme="@style/AppTheme.PopupOverlay" />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="Tip Percent"
+        android:id="@+id/lblTipPercent"
+        android:layout_alignParentStart="true"
+        android:textColor="#ffffff"
+        android:layout_below="@+id/lblBillAmount"
+        android:layout_alignParentLeft="true"
+        android:layout_marginLeft="10dp"
+        android:layout_marginBottom="20dp"
+        android:background="#000000" />
 
-    </android.support.design.widget.AppBarLayout>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="Tip"
+        android:id="@+id/lblTip"
+        android:layout_alignParentStart="true"
+        android:textColor="#ffffff"
+        android:layout_below="@+id/lblTipPercent"
+        android:layout_alignParentLeft="true"
+        android:layout_marginLeft="10dp"
+        android:layout_marginBottom="20dp"
+        android:background="#000000" />
 
-    <include layout="@layout/content_main" />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="Total"
+        android:id="@+id/lblTotal"
+        android:layout_alignParentStart="true"
+        android:textColor="#ffffff"
+        android:layout_below="@+id/lblTip"
+        android:layout_alignParentLeft="true"
+        android:layout_marginLeft="10dp"
+        android:layout_marginBottom="20dp"
+        android:background="#000000" />
 
-    <android.support.design.widget.FloatingActionButton android:id="@+id/fab"
-        android:layout_width="wrap_content" android:layout_height="wrap_content"
-        android:layout_gravity="bottom|end" android:layout_margin="@dimen/fab_margin"
-        android:src="@android:drawable/ic_dialog_email" />
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="numberDecimal"
+        android:ems="10"
+        android:id="@+id/txtBillAmount"
+        android:layout_alignTop="@+id/lblBillAmount"
+        android:layout_alignParentEnd="true"
+        android:width="160dp"
+        android:layout_marginRight="10dp"
+        android:textColor="#ffffff"
+        android:text="0.00"
+        android:textAlignment="textEnd"
+        android:background="#000000"
+        android:textAppearance="?android:attr/textAppearanceLarge" />
 
-</android.support.design.widget.CoordinatorLayout>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="00%"
+        android:id="@+id/txtTipPercent"
+        android:textColor="#ffffff"
+        android:background="#000000"
+        android:layout_marginRight="10dp"
+        android:layout_alignTop="@+id/lblTipPercent"
+        android:layout_alignParentEnd="true" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="$0.00"
+        android:id="@+id/txtTip"
+        android:layout_alignBottom="@+id/lblTip"
+        android:textColor="#ffffff"
+        android:background="#000000"
+        android:width="100dp"
+        android:layout_marginRight="10dp"
+        android:layout_alignStart="@+id/txtTotal"
+        android:textAlignment="textEnd" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="$0.00"
+        android:id="@+id/txtTotal"
+        android:textColor="#ffffff"
+        android:background="#000000"
+        android:width="100dp"
+        android:layout_marginRight="10dp"
+        android:layout_alignTop="@+id/lblTotal"
+        android:layout_alignParentEnd="true"
+        android:textAlignment="textEnd" />
+
+    <Button
+        style="?android:attr/buttonStyleSmall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="+"
+        android:id="@+id/btnIncrease"
+        android:layout_alignTop="@+id/btnDecrease"
+        android:layout_toStartOf="@+id/btnDecrease" />
+
+    <Button
+        style="?android:attr/buttonStyleSmall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="-"
+        android:id="@+id/btnDecrease"
+        android:layout_below="@+id/txtBillAmount"
+        android:layout_toStartOf="@+id/txtTipPercent"
+        android:layout_marginEnd="25dp"
+        android:layout_marginTop="10dp" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Clear all"
+        android:id="@+id/btnClear"
+        android:layout_below="@+id/lblTotal"
+        android:layout_alignStart="@+id/lblTotal"
+        android:layout_alignEnd="@+id/txtBillAmount" />
+
+</RelativeLayout>
