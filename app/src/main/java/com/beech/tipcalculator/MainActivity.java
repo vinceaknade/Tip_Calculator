@@ -2,13 +2,16 @@ package com.beech.tipcalculator;
 
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
+import android.nfc.Tag;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.TextView.OnEditorActionListener;
 
@@ -17,11 +20,14 @@ import java.text.NumberFormat;
 import java.text.ParseException;
 
 /****************************NOTE**************************/
-    //alt+enter will bring up a solution menu for bugs related to imports (Perhaps more)
+    //alt+enter will bring up a solution menu for bugs
 /****************************NOTE**************************/
 
-public class MainActivity extends AppCompatActivity
+public class MainActivity
+        extends AppCompatActivity
         implements OnEditorActionListener, View.OnClickListener {
+
+    private static final String TAG = "Debug Activity";
 
     private static final float defaultTipPercent = .2f;
     private static final float adjustTip = .01f;
@@ -33,9 +39,12 @@ public class MainActivity extends AppCompatActivity
     private TextView txtTip;
     private TextView txtTotal;
 
-    private Button btnIncrease;
-    private Button btnDecrease;
+    //private Button btnIncrease;
+    //private Button btnDecrease;
     private Button btnClear;
+    private Button btnApply;
+
+    private SeekBar sbrTip;
 
     //Instance Variables (Declaration) for calculations
     private float tipPercent;
@@ -62,16 +71,20 @@ public class MainActivity extends AppCompatActivity
         txtTip = (TextView) findViewById(R.id.txtTip);
         txtTotal = (TextView) findViewById(R.id.txtTotal);
 
-        btnIncrease = (Button) findViewById(R.id.btnIncrease);
-        btnDecrease = (Button) findViewById(R.id.btnDecrease);
+        //btnIncrease = (Button) findViewById(R.id.btnIncrease);
+        //btnDecrease = (Button) findViewById(R.id.btnDecrease);
         btnClear = (Button) findViewById(R.id.btnClear);
+        btnApply = (Button) findViewById(R.id.btnApply);
+
+        sbrTip = (SeekBar) findViewById(R.id.sbrTip);
 
         //Create Listeners
         txtBillAmount.setOnEditorActionListener(this);
 
-        btnIncrease.setOnClickListener(this);
-        btnDecrease.setOnClickListener(this);
+        //btnIncrease.setOnClickListener(this);
+        //btnDecrease.setOnClickListener(this);
         btnClear.setOnClickListener(this);
+        btnApply.setOnClickListener(this);
 
         currency = NumberFormat.getCurrencyInstance();
         percent = NumberFormat.getPercentInstance();
@@ -88,16 +101,7 @@ public class MainActivity extends AppCompatActivity
     protected void onPause() {
 
         //save instance variables
-        //access file editor
-        Editor editor = savedValues.edit();
-
-        //write to file
-        editor.putString("billAmountString", strBillAmount);
-        editor.putFloat("tipPercent",tipPercent);
-
-        //commit changes
-        editor.commit();
-
+        saveInstance();
         super.onPause();
     }
 
@@ -105,7 +109,7 @@ public class MainActivity extends AppCompatActivity
     protected void onResume() {
         super.onResume();
 
-        //retrieve instance variables //TODO test toString() here
+        //retrieve instance variables
         strBillAmount = savedValues.getString("billAmountString","");
         tipPercent = savedValues.getFloat("tipPercent", defaultTipPercent);
 
@@ -131,7 +135,7 @@ public class MainActivity extends AppCompatActivity
 
         switch(v.getId())
         {
-            case R.id.btnDecrease:
+            /*case R.id.btnDecrease:
             {
                 tipPercent -= adjustTip;
                 break;
@@ -140,10 +144,14 @@ public class MainActivity extends AppCompatActivity
             {
                 tipPercent += adjustTip;
                 break;
-            }
+            }*/
             case R.id.btnClear:
             {
                 setDefaults();
+            }
+            case R.id.btnApply: {
+                //obtain tip and convert to %
+                tipPercent = ((float)sbrTip.getProgress()/100);
             }
         }
         calculateAndDisplay();
@@ -157,19 +165,19 @@ public class MainActivity extends AppCompatActivity
         //get bill amount
         strBillAmount = txtBillAmount.getText().toString();
 
-        if( strBillAmount.equals("")){
+        /*if( strBillAmount.equals("")){
             billAmount = 0f;
         } else {
                 billAmount = Float.parseFloat(strBillAmount);
-        }
+        }*/
 
-        /*try {
+        try {
             billAmount = Float.parseFloat(strBillAmount);
         }
         catch(Exception e)
         {
             billAmount = 0f;
-        }*/
+        }
 
         //calculate total
         tipAmount = billAmount * tipPercent;
@@ -187,19 +195,28 @@ public class MainActivity extends AppCompatActivity
     }
 
     public void setDefaults(){
-        tipPercent = defaultTipPercent;
-        txtBillAmount.setText("");
-        updateUI(0f, 0f);
 
-        /*//save instance variables //TODO this seems wrong
+        tipPercent = defaultTipPercent;
+        sbrTip.setProgress((int)(tipPercent * 100));
+        strBillAmount = "";
+
+        txtBillAmount.setText(strBillAmount);
+        updateUI(0f, 0f);
+        saveInstance();
+
+        Log.i(TAG, "defaults applied");
+    }
+
+    private void saveInstance() {
+        //save instance variables
         //access file editor
         Editor editor = savedValues.edit();
 
         //write to file
-        editor.putString("billAmountString", "");
-        editor.putFloat("tipPercent", 0f);
+        editor.putString("billAmountString", strBillAmount);
+        editor.putFloat("tipPercent", tipPercent);
 
         //commit changes
-        editor.commit();*/
+        editor.commit();
     }
 }

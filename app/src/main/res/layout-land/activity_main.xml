@@ -20,7 +20,7 @@
         android:background="#000000"
         android:layout_alignParentTop="true"
         android:layout_alignParentStart="true"
-        android:layout_marginTop="30dp" />
+        android:layout_marginTop="10dp" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -62,7 +62,7 @@
         android:layout_below="@+id/lblTip"
         android:layout_alignParentLeft="true"
         android:layout_marginLeft="240dp"
-        android:layout_marginBottom="20dp"
+        android:layout_marginBottom="10dp"
         android:background="#000000" />
 
     <EditText
@@ -84,7 +84,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="00%"
+        android:text="20%"
         android:id="@+id/txtTipPercent"
         android:textColor="#ffffff"
         android:background="#000000"
@@ -121,32 +121,35 @@
         android:textAlignment="textEnd" />
 
     <Button
-        style="?android:attr/buttonStyleSmall"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="+"
-        android:id="@+id/btnIncrease"
-        android:layout_alignTop="@+id/btnDecrease"
-        android:layout_toStartOf="@+id/btnDecrease" />
-
-    <Button
-        style="?android:attr/buttonStyleSmall"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="-"
-        android:id="@+id/btnDecrease"
-        android:layout_below="@+id/txtBillAmount"
-        android:layout_toStartOf="@+id/txtTipPercent"
-        android:layout_marginEnd="25dp"
-        android:layout_marginTop="10dp" />
-
-    <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Clear all"
         android:id="@+id/btnClear"
+        android:layout_below="@+id/btnApply"
+        android:layout_alignStart="@+id/btnApply"
+        android:layout_alignEnd="@+id/btnApply" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Apply"
+        android:id="@+id/btnApply"
         android:layout_below="@+id/lblTotal"
         android:layout_alignStart="@+id/lblTotal"
-        android:layout_alignEnd="@+id/txtBillAmount" />
+        android:layout_alignEnd="@+id/txtTotal" />
+
+    <SeekBar
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/sbrTip"
+        android:max="30"
+        android:progress="20"
+        android:indeterminate="false"
+        android:minWidth="70dp"
+        android:background="#000000"
+        android:alpha="30"
+        android:layout_alignTop="@+id/txtTipPercent"
+        android:layout_alignStart="@+id/txtBillAmount"
+        android:layout_alignBottom="@+id/lblTipPercent" />
 
 </RelativeLayout>
